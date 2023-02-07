@@ -4,11 +4,18 @@
  */
 package vista;
 
+import java.util.List;
+import javax.swing.JOptionPane;
+import models.Products;
+import servicios.ProductServices;
+
 /**
  *
  * @author juanc
  */
 public class FrmListaProduct extends javax.swing.JFrame {
+    
+    
 
     /**
      * Creates new form FrmListaProduct
@@ -27,30 +34,22 @@ public class FrmListaProduct extends javax.swing.JFrame {
     private void initComponents() {
 
         lblListaProductos = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTblListaProductos = new javax.swing.JTable();
         jbtnBuscarProducto = new javax.swing.JButton();
         jtxtNombreProducto = new javax.swing.JTextField();
         JbtnListarproductos = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTableProduct = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         lblListaProductos.setText("Listado De Productos");
 
-        jTblListaProductos.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane1.setViewportView(jTblListaProductos);
-
         jbtnBuscarProducto.setText("Buscar");
+        jbtnBuscarProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnBuscarProductoActionPerformed(evt);
+            }
+        });
 
         jtxtNombreProducto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -58,42 +57,60 @@ public class FrmListaProduct extends javax.swing.JFrame {
             }
         });
 
-        JbtnListarproductos.setText("jButton1");
+        JbtnListarproductos.setText("Listar Productos");
+        JbtnListarproductos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JbtnListarproductosActionPerformed(evt);
+            }
+        });
+
+        jTableProduct.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Codigo", "Nombre", "Estado", "Valor Inicial"
+            }
+        ));
+        jScrollPane2.setViewportView(jTableProduct);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(38, 38, 38))
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblListaProductos)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jtxtNombreProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jbtnBuscarProducto))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 361, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(163, 163, 163)
-                        .addComponent(JbtnListarproductos)))
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addGap(167, 167, 167)
+                .addComponent(JbtnListarproductos)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addComponent(lblListaProductos)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
+                .addComponent(jtxtNombreProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(39, 39, 39)
+                .addComponent(jbtnBuscarProducto)
+                .addGap(49, 49, 49))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(24, 24, 24)
+                .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblListaProductos)
                     .addComponent(jbtnBuscarProducto)
-                    .addComponent(jtxtNombreProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(jtxtNombreProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblListaProductos))
+                .addGap(44, 44, 44)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
                 .addComponent(JbtnListarproductos)
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addGap(26, 26, 26))
         );
 
         pack();
@@ -102,6 +119,46 @@ public class FrmListaProduct extends javax.swing.JFrame {
     private void jtxtNombreProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtNombreProductoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jtxtNombreProductoActionPerformed
+
+    private void jbtnBuscarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnBuscarProductoActionPerformed
+        // TODO add your handling code here:
+        //DefaultTableModel model = new DefaultTableModel();
+        if(!jtxtNombreProducto.getText().isEmpty()){
+                ProductServices objProductServices = new ProductServices();
+                Products p = new Products();
+                p=objProductServices.consultarProduct(Integer.parseInt(jtxtNombreProducto.getText()));
+                
+                System.out.println(p.getName());
+		System.out.println(p.getState());
+                this.jTableProduct.setValueAt(p.getCode(), 0,0);
+                this.jTableProduct.setValueAt(p.getName(), 0,1);
+                this.jTableProduct.setValueAt(p.getState(), 0,2);
+                this.jTableProduct.setValueAt(p.getinitValue(), 0,3);
+                
+        }else{
+                JOptionPane.showMessageDialog(this, "No ha suministrado datos validos.");
+        }
+        /*try{
+            
+                
+            
+        }catch(Exception e){
+        }*/
+            
+    }//GEN-LAST:event_jbtnBuscarProductoActionPerformed
+
+    private void JbtnListarproductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JbtnListarproductosActionPerformed
+        // TODO add your handling code here:
+        ProductServices objProductServices = new ProductServices();
+        List<Products> lstProducts = objProductServices.listarProduct();
+        for (int i = 0; i < lstProducts.size(); i++) {
+            this.jTableProduct.setValueAt(lstProducts.get(i).getCode(), i,0);
+            this.jTableProduct.setValueAt(lstProducts.get(i).getName(), i,1);
+            this.jTableProduct.setValueAt(lstProducts.get(i).getinitValue(), i,2);
+            this.jTableProduct.setValueAt(lstProducts.get(i).getState(), i,3);
+        }
+
+    }//GEN-LAST:event_JbtnListarproductosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -140,8 +197,8 @@ public class FrmListaProduct extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton JbtnListarproductos;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTblListaProductos;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTableProduct;
     private javax.swing.JButton jbtnBuscarProducto;
     private javax.swing.JTextField jtxtNombreProducto;
     private javax.swing.JLabel lblListaProductos;

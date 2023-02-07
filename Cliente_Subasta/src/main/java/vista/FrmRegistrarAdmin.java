@@ -7,9 +7,7 @@ package vista;
 
 import javax.swing.JOptionPane;
 import models.Cliente;
-import models.Manager;
 import servicios.ClienteServices;
-import servicios.ManagerServices;
 
 /**
  *

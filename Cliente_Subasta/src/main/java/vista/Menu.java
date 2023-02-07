@@ -3,21 +3,26 @@ package vista;
 import java.util.Date;
 import java.util.List;
 import models.Cliente;
-import models.Manager;
+import models.Products;
 import servicios.ClienteServices;
-import servicios.ManagerServices;
+import servicios.ProductServices;
 
 public class Menu {
 
 	public static void main(String[] args) {
 		
 		ClienteServices objClienteServices= new ClienteServices();
-                ManagerServices objManagerServices = new ManagerServices();
+                ProductServices objProductServices= new ProductServices();
 
 		System.out.println("consultando un cliente con username jperez");
 		Cliente objClienteConsultado= objClienteServices.consultarCliente("jperez");
-		imprimirCliente(objClienteConsultado);
+		//imprimirCliente(objClienteConsultado);
 		
+                System.out.println("consultando un Producto con id 1");
+		Products objProductConsultado= objProductServices.consultarProduct(1);
+		imprimirProducto(objProductConsultado);
+                
+                /*
                 System.out.println("consultando un cliente con username dgustin");
 		Manager objManagerConsultado= objManagerServices.consultarManager("dgustin");
 		imprimirManager(objManagerConsultado);
@@ -63,13 +68,15 @@ public class Menu {
 	    //Boolean bandera= objClienteServices.eliminarCliente(2);
 	    
 	    //System.out.println("\n listando clientes que contiene el cliente eliminado");
-            List<Cliente> listaDeClientes= objClienteServices.listarClientes();
-            List<Manager> listaDeManagers= objManagerServices.listarManagers();
-            
+            //List<Cliente> listaDeClientes= objClienteServices.listarClientes();
+           // List<Manager> listaDeManagers= objManagerServices.listarManagers();
+            List<Products> listaDeproduct= objProductServices.listarProduct();
+           
+           /*
             for (Cliente cliente : listaDeClientes) {
                     imprimirCliente(cliente);
-            }
-            
+            }*/
+            /*
             for (Manager manager : listaDeManagers) {
                     imprimirManager(manager);
             }
@@ -90,17 +97,21 @@ public class Menu {
            
 	}
 	
-	private static void imprimirCliente(Cliente objCliente)
-	{   
+	private static void imprimirProducto(Products objProducto)
+	{   /*
 		System.out.println("Cliente:");
                 System.out.println(objCliente.getname());
 		System.out.println(objCliente.getlastname());
 		System.out.println(objCliente.getPhone());
 		System.out.println(objCliente.getEmail());
                 System.out.println("username:"+objCliente.getUsername());
-		System.out.println("password"+objCliente.getPassword());
+		System.out.println("password"+objCliente.getPassword());*/
+            
+            System.out.println("Producto:");
+                System.out.println(objProducto.getName());
+		System.out.println(objProducto.getState());
 	}
-        
+        /*
         private static void imprimirManager(Manager objManager){
             System.out.println("Manager:");
             System.out.println(objManager.getName());
@@ -108,6 +119,6 @@ public class Menu {
             System.out.println(objManager.getUsername());
             System.out.println(objManager.getPassword());
             
-        }
+        }*/
 
 }
