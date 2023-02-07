@@ -5,6 +5,7 @@
 package vista;
 
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import models.Product;
 import models.State;
@@ -154,22 +155,28 @@ public class FrmListarProducto extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonProductosPendientesActionPerformed
     
     private void llenarTablaProductosPendientes(){
-        List<Product> lstProducts = objProductService.listarProducts();
-        Object matriz [][] = new Object [lstProducts.size()][5];
-        int j=0;
-	for(int i=0;i<lstProducts.size();i++) {
-            if(lstProducts.get(i).getState().toString().equals("Pendiente")){
-		matriz [j][0] =  lstProducts.get(i).getCode();
-		matriz [j][1] = lstProducts.get(i).getName();
-		matriz [j][2] = lstProducts.get(i).getState();
-		matriz [j][3] = lstProducts.get(i).getinitValue();
-                j++;
+        try{
+            List<Product> lstProducts = objProductService.listarProducts();
+            Object matriz [][] = new Object [lstProducts.size()][4];
+            int j=0;
+            for(int i=0;i<lstProducts.size();i++) {
+                if(lstProducts.get(i).getState().toString().equals("Pendiente")){
+                    matriz [j][0] =  lstProducts.get(i).getCode();
+                    matriz [j][1] = lstProducts.get(i).getName();
+                    matriz [j][2] = lstProducts.get(i).getState();
+                    matriz [j][3] = lstProducts.get(i).getinitValue();
+                    j++;
+                }
             }
+            this.jTableProducts.setModel(new DefaultTableModel(
+                                    matriz,
+                new String [] {"Codigo","Nombre","Estado","Valor"}
+            ));
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(this, "Fallo la conexion con el servidor.");
         }
-        this.jTableProducts.setModel(new DefaultTableModel(
-				matriz,
-            new String [] {"Codigo","Nombre","Estado","Valor"}
-	));
+        
+        
         
                 /*
         List<Product> lstProducts = objProductService.listarProducts();
@@ -190,22 +197,27 @@ public class FrmListarProducto extends javax.swing.JFrame {
     }
     
     private void llenarTablaProductoEnSubasta(){
-        List<Product> lstProducts = objProductService.listarProducts();
-        Object matriz [][] = new Object [lstProducts.size()][5];
-        int j=0;
-	for(int i=0;i<lstProducts.size();i++) {
-            if(lstProducts.get(i).getState().toString().equals("En_Subasta")){		
-                matriz [j][0] =  lstProducts.get(i).getCode();
-		matriz [j][1] = lstProducts.get(i).getName();
-		matriz [j][2] = lstProducts.get(i).getState();
-		matriz [j][3] = lstProducts.get(i).getinitValue();
-                j++;
+        try{
+            List<Product> lstProducts = objProductService.listarProducts();
+            Object matriz [][] = new Object [lstProducts.size()][5];
+            int j=0;
+            for(int i=0;i<lstProducts.size();i++) {
+                if(lstProducts.get(i).getState().toString().equals("En_Subasta")){		
+                    matriz [j][0] =  lstProducts.get(i).getCode();
+                    matriz [j][1] = lstProducts.get(i).getName();
+                    matriz [j][2] = lstProducts.get(i).getState();
+                    matriz [j][3] = lstProducts.get(i).getinitValue();
+                    j++;
+                }
             }
+            this.jTableProducts.setModel(new DefaultTableModel(
+                                    matriz,
+                new String [] {"Codigo","Nombre","Estado","Valor"}
+            ));
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(this, "Fallo la conexion con el servidor.");
         }
-        this.jTableProducts.setModel(new DefaultTableModel(
-				matriz,
-            new String [] {"Codigo","Nombre","Estado","Valor"}
-	));
+        
         /*
         List<Product> lstProducts = objProductService.listarProducts();
         Product objProductEnSubasta = new Product();

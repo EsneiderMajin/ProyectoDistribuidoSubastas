@@ -6,6 +6,7 @@ package vista;
 
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import models.Products;
 import servicios.ProductServices;
 
@@ -124,40 +125,63 @@ public class FrmListaProduct extends javax.swing.JFrame {
     private void jbtnBuscarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnBuscarProductoActionPerformed
         // TODO add your handling code here:
         //DefaultTableModel model = new DefaultTableModel();
-        if(!jtxtNombreProducto.getText().isEmpty()){
+        try{
+            if(!jtxtNombreProducto.getText().isEmpty()){
                 ProductServices objProductServices = new ProductServices();
                 Products p = new Products();
                 p=objProductServices.consultarProduct(Integer.parseInt(jtxtNombreProducto.getText()));
                 
                 System.out.println(p.getName());
 		System.out.println(p.getState());
+                
+                Object matriz [][] = new Object [1][4];
+                this.jTableProduct.setModel(new DefaultTableModel(
+                                        matriz,
+                    new String [] {"Codigo","Nombre","Estado","Valor"}
+                ));
+                
                 this.jTableProduct.setValueAt(p.getCode(), 0,0);
                 this.jTableProduct.setValueAt(p.getName(), 0,1);
                 this.jTableProduct.setValueAt(p.getState(), 0,2);
                 this.jTableProduct.setValueAt(p.getinitValue(), 0,3);
                 
-        }else{
-                JOptionPane.showMessageDialog(this, "No ha suministrado datos validos.");
-        }
-        /*try{
-            
-                
-            
+            }else{
+                    JOptionPane.showMessageDialog(this, "No ha suministrado datos validos.");
+            }
         }catch(Exception e){
-        }*/
-            
+            JOptionPane.showMessageDialog(this, "Fallo la conexion con el servidor.");
+        } 
     }//GEN-LAST:event_jbtnBuscarProductoActionPerformed
 
     private void JbtnListarproductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JbtnListarproductosActionPerformed
         // TODO add your handling code here:
-        ProductServices objProductServices = new ProductServices();
+        
+        try{
+            ProductServices objProductServices = new ProductServices();
+            List<Products> lstProducts = objProductServices.listarProduct();
+            Object matriz [][] = new Object [lstProducts.size()][4];
+            for(int i=0;i<lstProducts.size();i++) {
+                matriz [i][0] = lstProducts.get(i).getCode();
+                matriz [i][1] = lstProducts.get(i).getName();
+                matriz [i][2] = lstProducts.get(i).getState();
+                matriz [i][3] = lstProducts.get(i).getinitValue();
+            }
+            this.jTableProduct.setModel(new DefaultTableModel(
+                                    matriz,
+                new String [] {"Codigo","Nombre","Estado","Valor"}
+            ));          
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(this, "Fallo la conexion con el servidor.");
+        }
+        
+        /*
         List<Products> lstProducts = objProductServices.listarProduct();
         for (int i = 0; i < lstProducts.size(); i++) {
             this.jTableProduct.setValueAt(lstProducts.get(i).getCode(), i,0);
             this.jTableProduct.setValueAt(lstProducts.get(i).getName(), i,1);
             this.jTableProduct.setValueAt(lstProducts.get(i).getinitValue(), i,2);
             this.jTableProduct.setValueAt(lstProducts.get(i).getState(), i,3);
-        }
+        }*/
 
     }//GEN-LAST:event_JbtnListarproductosActionPerformed
 
@@ -205,3 +229,9 @@ public class FrmListaProduct extends javax.swing.JFrame {
     private javax.swing.JLabel lblListaProductos;
     // End of variables declaration//GEN-END:variables
 }
+/*try{
+            
+                
+            
+        }catch(Exception e){
+        }*/

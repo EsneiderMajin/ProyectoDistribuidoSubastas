@@ -4,18 +4,28 @@
  */
 package vista;
 
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import models.Cliente;
+import models.Products;
+import servicios.ProductServices;
+
 /**
  *
  * @author juanc
  */
 public class FormOfrecerOferta extends javax.swing.JFrame {
 
+    
+    Cliente c = new Cliente();
+    
     /**
      * Creates new form FormRegistrarProducto
      */
-    public FormOfrecerOferta() {
+    public FormOfrecerOferta(Cliente cliente) {
         initComponents();
         this.setLocationRelativeTo(null);
+        c=cliente;
     }
 
     /**
@@ -70,9 +80,17 @@ public class FormOfrecerOferta extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Codigo", "Nombre", "Estado", "Valor Inicial"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                true, true, true, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(jTblProducto);
 
         jTblListaDeOfertas.setModel(new javax.swing.table.DefaultTableModel(
@@ -91,41 +109,46 @@ public class FormOfrecerOferta extends javax.swing.JFrame {
         JlblOfertasRealizadas.setText("Ofertas Realizadas :");
 
         jBtnBuscarProductoID.setText("Buscar");
+        jBtnBuscarProductoID.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnBuscarProductoIDActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(160, 160, 160)
-                        .addComponent(JbtnOferta, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(51, 51, 51)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 323, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 323, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(JlblOfertasRealizadas)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                    .addGap(138, 138, 138)
-                                    .addComponent(JlblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(160, 160, 160)
+                            .addComponent(JbtnOferta, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(51, 51, 51)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 323, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(JlblOfertasRealizadas)
                                 .addGroup(layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addComponent(JlblOferta)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(JtxtOferta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addComponent(JlblIdProduct)
-                                            .addGap(18, 18, 18)
-                                            .addComponent(JtxtIdProduct, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addGap(9, 9, 9)))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(173, 173, 173)
-                        .addComponent(jBtnBuscarProductoID)))
-                .addContainerGap(37, Short.MAX_VALUE))
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                            .addGap(138, 138, 138)
+                                            .addComponent(JlblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(JlblOferta, javax.swing.GroupLayout.Alignment.LEADING))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(JtxtOferta, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 323, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(183, 183, 183)
+                            .addComponent(jBtnBuscarProductoID)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addComponent(JlblIdProduct)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(JtxtIdProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(79, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -138,11 +161,11 @@ public class FormOfrecerOferta extends javax.swing.JFrame {
                     .addComponent(JtxtIdProduct, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jBtnBuscarProductoID)
-                .addGap(16, 16, 16)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(JlblOfertasRealizadas)
-                .addGap(18, 18, 18)
+                .addGap(12, 12, 12)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -155,6 +178,42 @@ public class FormOfrecerOferta extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jBtnBuscarProductoIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnBuscarProductoIDActionPerformed
+        // TODO add your handling code here:
+        try{
+            if(!JtxtIdProduct.getText().isEmpty()){
+                ProductServices objProductServices = new ProductServices();
+                Products p = new Products();
+                p=objProductServices.consultarProduct(Integer.parseInt(JtxtIdProduct.getText()));
+                if(!p.getState().toString().equals("Pendiente")){
+                    System.out.println(p.getName());
+                    System.out.println(p.getState());
+
+                    Object matriz [][] = new Object [1][4];
+                    this.jTblProducto.setModel(new DefaultTableModel(
+                                            matriz,
+                        new String [] {"Codigo","Nombre","Estado","Valor"}
+                    ));
+
+                    this.jTblProducto.setValueAt(p.getCode(), 0,0);
+                    this.jTblProducto.setValueAt(p.getName(), 0,1);
+                    this.jTblProducto.setValueAt(p.getState(), 0,2);
+                    this.jTblProducto.setValueAt(p.getinitValue(), 0,3);
+
+                    //mostrar en tabla solo para saber si llega el objeto cliente
+                    this.jTblListaDeOfertas.setValueAt(c.getname(), 0, 0);
+                }else{
+                    JOptionPane.showMessageDialog(this, "El articulo buscado no se encuentra disponible para subasta.");
+                }
+            }else{
+                    JOptionPane.showMessageDialog(this, "No ha suministrado datos validos.");
+            }
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(this, "Fallo la conexion con el servidor.");
+        }
+        
+    }//GEN-LAST:event_jBtnBuscarProductoIDActionPerformed
 
     /**
      * @param args the command line arguments
@@ -187,7 +246,7 @@ public class FormOfrecerOferta extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FormOfrecerOferta().setVisible(true);
+                new FormOfrecerOferta(null).setVisible(true);
             }
         });
     }

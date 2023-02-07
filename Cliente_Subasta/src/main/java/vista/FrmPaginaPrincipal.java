@@ -6,6 +6,7 @@
 package vista;
 
 import models.Cliente;
+import servicios.ClienteServices;
 
 /**
  *
@@ -13,6 +14,7 @@ import models.Cliente;
  */
 public class FrmPaginaPrincipal extends javax.swing.JFrame {
 
+    Cliente c = new Cliente();
     /**
      * Creates new form FrmPaginaPrincipal
      */
@@ -20,6 +22,7 @@ public class FrmPaginaPrincipal extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         lblUsuario.setText(cliente.getname());
+        c=cliente;
     }
 
     /**
@@ -115,7 +118,8 @@ public class FrmPaginaPrincipal extends javax.swing.JFrame {
 
     private void btnRealizarOfertaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRealizarOfertaActionPerformed
         // TODO add your handling code here:
-        FormOfrecerOferta formOferta = new FormOfrecerOferta();
+        ClienteServices objc = new ClienteServices();
+        FormOfrecerOferta formOferta = new FormOfrecerOferta(c);
         formOferta.setVisible(true);
     }//GEN-LAST:event_btnRealizarOfertaActionPerformed
 
