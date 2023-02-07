@@ -5,6 +5,7 @@
 package vista;
 
 import java.util.List;
+import javax.swing.table.DefaultTableModel;
 import models.Product;
 import models.State;
 import servicios.ProductServices;
@@ -24,7 +25,9 @@ public class FrmListarProducto extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         llenarTablaProductosPendientes();
     }
-
+    
+ 
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -131,15 +134,44 @@ public class FrmListarProducto extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonProductoEnSubastaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonProductoEnSubastaActionPerformed
+        /*
+        for (int i = 0; i < this.jTableProducts.getRowCount(); i++) {
+             this.jTableProducts.remove(i);
+            i-=1;
+        }
+        */
         llenarTablaProductoEnSubasta();
     }//GEN-LAST:event_jButtonProductoEnSubastaActionPerformed
 
     private void jButtonProductosPendientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonProductosPendientesActionPerformed
+        /*
+        for (int i = 0; i < this.jTableProducts.getRowCount(); i++) {
+             this.jTableProducts.remove(i);
+            i-=1;
+        }
+        */
         llenarTablaProductosPendientes();
     }//GEN-LAST:event_jButtonProductosPendientesActionPerformed
     
     private void llenarTablaProductosPendientes(){
+        List<Product> lstProducts = objProductService.listarProducts();
+        Object matriz [][] = new Object [lstProducts.size()][5];
+        int j=0;
+	for(int i=0;i<lstProducts.size();i++) {
+            if(lstProducts.get(i).getState().toString().equals("Pendiente")){
+		matriz [j][0] =  lstProducts.get(i).getCode();
+		matriz [j][1] = lstProducts.get(i).getName();
+		matriz [j][2] = lstProducts.get(i).getState();
+		matriz [j][3] = lstProducts.get(i).getinitValue();
+                j++;
+            }
+        }
+        this.jTableProducts.setModel(new DefaultTableModel(
+				matriz,
+            new String [] {"Codigo","Nombre","Estado","Valor"}
+	));
         
+                /*
         List<Product> lstProducts = objProductService.listarProducts();
         
         for (int i = 0; i < lstProducts.size(); i++) {
@@ -154,21 +186,39 @@ public class FrmListarProducto extends javax.swing.JFrame {
             this.jTableProducts.setValueAt(lstProducts.get(i).getinitValue(), i,2);
             this.jTableProducts.setValueAt(lstProducts.get(i).getState(), i,3);
         }
+        */
     }
     
     private void llenarTablaProductoEnSubasta(){
+        List<Product> lstProducts = objProductService.listarProducts();
+        Object matriz [][] = new Object [lstProducts.size()][5];
+        int j=0;
+	for(int i=0;i<lstProducts.size();i++) {
+            if(lstProducts.get(i).getState().toString().equals("En_Subasta")){		
+                matriz [j][0] =  lstProducts.get(i).getCode();
+		matriz [j][1] = lstProducts.get(i).getName();
+		matriz [j][2] = lstProducts.get(i).getState();
+		matriz [j][3] = lstProducts.get(i).getinitValue();
+                j++;
+            }
+        }
+        this.jTableProducts.setModel(new DefaultTableModel(
+				matriz,
+            new String [] {"Codigo","Nombre","Estado","Valor"}
+	));
+        /*
         List<Product> lstProducts = objProductService.listarProducts();
         Product objProductEnSubasta = new Product();
         for (int i = 0; i < lstProducts.size(); i++) {
             if(lstProducts.get(i).getState().equals(State.En_Subasta)){
                 objProductEnSubasta=lstProducts.get(i);
+                this.jTableProducts.setValueAt(objProductEnSubasta.getCode(), i,0);
+                this.jTableProducts.setValueAt(objProductEnSubasta.getName(), i,1);
+                this.jTableProducts.setValueAt(objProductEnSubasta.getinitValue(), i,2);
+                this.jTableProducts.setValueAt(objProductEnSubasta.getState(), i,3);
             }
         }
-        
-        this.jTableProducts.setValueAt(objProductEnSubasta.getCode(), 0,0);
-        this.jTableProducts.setValueAt(objProductEnSubasta.getName(), 0,1);
-        this.jTableProducts.setValueAt(objProductEnSubasta.getinitValue(), 0,2);
-        this.jTableProducts.setValueAt(objProductEnSubasta.getState(), 0,3);
+        */
     }
     /**
      * @param args the command line arguments
