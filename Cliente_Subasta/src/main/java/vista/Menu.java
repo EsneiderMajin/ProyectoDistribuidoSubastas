@@ -3,7 +3,7 @@ package vista;
 import java.util.Date;
 import java.util.List;
 import models.Cliente;
-import models.Products;
+import models.Product;
 import servicios.ClienteServices;
 import servicios.ProductServices;
 
@@ -19,7 +19,7 @@ public class Menu {
 		//imprimirCliente(objClienteConsultado);
 		
                 System.out.println("consultando un Producto con id 1");
-		Products objProductConsultado= objProductServices.consultarProduct(1);
+		Product objProductConsultado= objProductServices.consultarProduct(1);
 		imprimirProducto(objProductConsultado);
                 
                 /*
@@ -70,7 +70,7 @@ public class Menu {
 	    //System.out.println("\n listando clientes que contiene el cliente eliminado");
             //List<Cliente> listaDeClientes= objClienteServices.listarClientes();
            // List<Manager> listaDeManagers= objManagerServices.listarManagers();
-            List<Products> listaDeproduct= objProductServices.listarProduct();
+            List<Product> listaDeproduct= objProductServices.listarProduct();
            
            /*
             for (Cliente cliente : listaDeClientes) {
@@ -97,7 +97,7 @@ public class Menu {
            
 	}
 	
-	private static void imprimirProducto(Products objProducto)
+	private static void imprimirProducto(Product objProducto)
 	{   /*
 		System.out.println("Cliente:");
                 System.out.println(objCliente.getname());

@@ -1,24 +1,22 @@
 package models;
 
-public class Products {
+public class Product {
     
     private int code;
     private String name;
-    private long initValue;
+    private Long initValue;
     private State state;
-    private long currentBid;
 
-    public Products(){
+    public Product(){
 
     }
 
-    public Products(Integer code, String name, long initValue, State state, long currentBid){
+    public Product(Integer code, String name, Long initValue, State state){
         super();
         this.code = code;
         this.name = name;
         this.initValue = initValue;
         this.state = state;
-        this.currentBid = currentBid;
     }
 
     public Integer getCode(){
@@ -37,11 +35,11 @@ public class Products {
         this.name = name;
     }
 
-    public long getinitValue(){
+    public long getInitValue(){
         return initValue;
     }
 
-    public void setinitValue(long initValue){
+    public void setInitValue(Long initValue){
         this.initValue = initValue;
     }
 
@@ -53,16 +51,6 @@ public class Products {
         this.state =state;
     }
 
-    public long getcurrentBid(){
-        return currentBid;
-    }
-
-    public void setcurrentBid(long currentBid){
-        this.currentBid = currentBid;
-    }
-
-    public String getInitValue() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+    
 
 }

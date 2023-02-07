@@ -12,7 +12,7 @@ import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
-import models.Products;
+import models.Product;
 import org.glassfish.jersey.jackson.JacksonFeature;
 
 /**
@@ -29,60 +29,60 @@ public class ProductServices {
 	this.objClientePeticiones = ClientBuilder.newClient().register(new JacksonFeature());
     }
         
-    public Products consultarProduct(int code)
+    public Product consultarProduct(int code)
     {
-            Products  objProduct=null;	
+            Product  objProduct=null;	
 
             WebTarget target = this.objClientePeticiones.target(this.endPoint+code);
 
             Invocation.Builder objPeticion=target.request(MediaType.APPLICATION_JSON_TYPE);	
 
-            objProduct = objPeticion.get(Products.class);
+            objProduct = objPeticion.get(Product.class);
 
             return objProduct;
     }
 
 
-    public List<Products> listarProduct()
+    public List<Product> listarProduct()
     {
-            List<Products> listaProduct=null;			
+            List<Product> listaProduct=null;			
 
             WebTarget target = this.objClientePeticiones.target(this.endPoint);
 
             Invocation.Builder objPeticion=target.request(MediaType.APPLICATION_JSON);
 
-            listaProduct = objPeticion.get(new GenericType<List<Products>>() {});	
+            listaProduct = objPeticion.get(new GenericType<List<Product>>() {});	
 
             return listaProduct;
     }
 
 
-    public Products registrarProduct(Products objproductsRegistar)
+    public Product registrarProduct(Product objproductsRegistar)
     {
-            Products  objProduct=null;
+            Product  objProduct=null;
 
             WebTarget target = this.objClientePeticiones.target(this.endPoint);	    
 
-        Entity<Products> data = Entity.entity(objproductsRegistar, MediaType.APPLICATION_JSON_TYPE);
+        Entity<Product> data = Entity.entity(objproductsRegistar, MediaType.APPLICATION_JSON_TYPE);
 
         Invocation.Builder objPeticion=target.request(MediaType.APPLICATION_JSON_TYPE);
 
-        objProduct = objPeticion.post(data, Products.class);		
+        objProduct = objPeticion.post(data, Product.class);		
 
             return objProduct;
     }
 
-    public Products actualizarProduct(Products objproductActualizar,Integer id)
+    public Product actualizarProduct(Product objproductActualizar,Integer id)
     {
-            Products  objCliente=null;		
+            Product  objCliente=null;		
 
             WebTarget target = this.objClientePeticiones.target(this.endPoint+"/"+id);	  
 
-        Entity<Products> data = Entity.entity(objproductActualizar, MediaType.APPLICATION_JSON_TYPE);
+        Entity<Product> data = Entity.entity(objproductActualizar, MediaType.APPLICATION_JSON_TYPE);
 
         Invocation.Builder objPeticion=target.request(MediaType.APPLICATION_JSON_TYPE);
 
-        objCliente = objPeticion.put(data, Products.class);		
+        objCliente = objPeticion.put(data, Product.class);		
 
             return objCliente;
     }
@@ -99,5 +99,18 @@ public class ProductServices {
             bandera = objPeticion.delete(Boolean.class);
 
             return bandera;
-    }    
+    }  
+    
+    public Product consultarProductSubasta()
+    {
+            Product  objProduct=null;	
+
+            WebTarget target = this.objClientePeticiones.target(this.endPoint+"state");
+
+            Invocation.Builder objPeticion=target.request(MediaType.APPLICATION_JSON_TYPE);	
+
+            objProduct = objPeticion.get(Product.class);
+
+            return objProduct;
+    }
 }

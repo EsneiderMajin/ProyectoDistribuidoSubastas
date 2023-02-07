@@ -4,20 +4,27 @@
  */
 package vista;
 
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import models.Cliente;
-import models.Products;
+import models.Offer;
+import models.Product;
+import servicios.OfertaServices;
 import servicios.ProductServices;
 
 /**
  *
  * @author juanc
  */
-public class FormOfrecerOferta extends javax.swing.JFrame {
+public class FormOfrecerOferta extends javax.swing.JFrame  implements Runnable{
 
     
-    Cliente c = new Cliente();
+    private Cliente client;
+    private ProductServices objProductServices;
+    private OfertaServices objOfertaServices;
+    Thread hilo;
+    
     
     /**
      * Creates new form FormRegistrarProducto
@@ -25,7 +32,11 @@ public class FormOfrecerOferta extends javax.swing.JFrame {
     public FormOfrecerOferta(Cliente cliente) {
         initComponents();
         this.setLocationRelativeTo(null);
-        c=cliente;
+        this.objProductServices=new ProductServices();
+        this.objOfertaServices=new OfertaServices();
+        this.client=cliente;
+        consultarSubastaActual();
+        iniciarHilo();
     }
 
     /**
@@ -40,9 +51,7 @@ public class FormOfrecerOferta extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
-        JtxtIdProduct = new javax.swing.JTextField();
         JbtnOferta = new javax.swing.JButton();
-        JlblIdProduct = new javax.swing.JLabel();
         JlblOferta = new javax.swing.JLabel();
         JtxtOferta = new javax.swing.JTextField();
         JlblTitulo = new javax.swing.JLabel();
@@ -51,7 +60,7 @@ public class FormOfrecerOferta extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTblListaDeOfertas = new javax.swing.JTable();
         JlblOfertasRealizadas = new javax.swing.JLabel();
-        jBtnBuscarProductoID = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
@@ -62,10 +71,13 @@ public class FormOfrecerOferta extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         JbtnOferta.setBackground(new java.awt.Color(200, 200, 200));
-        JbtnOferta.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
+        JbtnOferta.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         JbtnOferta.setText("Ofertar");
-
-        JlblIdProduct.setText("Digite el identificador de el producto en subasta :");
+        JbtnOferta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JbtnOfertaActionPerformed(evt);
+            }
+        });
 
         JlblOferta.setText("Suministre su oferta :");
 
@@ -101,120 +113,124 @@ public class FormOfrecerOferta extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Codigo", "Producto", "Cliente", "Oferta"
             }
         ));
         jScrollPane2.setViewportView(jTblListaDeOfertas);
 
         JlblOfertasRealizadas.setText("Ofertas Realizadas :");
 
-        jBtnBuscarProductoID.setText("Buscar");
-        jBtnBuscarProductoID.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBtnBuscarProductoIDActionPerformed(evt);
-            }
-        });
+        jLabel1.setText("Producto Actual En Subasta:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(160, 160, 160)
-                            .addComponent(JbtnOferta, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(51, 51, 51)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 323, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(JlblOfertasRealizadas)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                            .addGap(138, 138, 138)
-                                            .addComponent(JlblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addComponent(JlblOferta, javax.swing.GroupLayout.Alignment.LEADING))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(JtxtOferta, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 323, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(183, 183, 183)
-                            .addComponent(jBtnBuscarProductoID)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGap(29, 29, 29)
-                        .addComponent(JlblIdProduct)
+                .addGap(51, 51, 51)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(JlblOfertasRealizadas)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(138, 138, 138)
+                        .addComponent(JlblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 323, Short.MAX_VALUE)
+                    .addComponent(jLabel1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(JlblOferta)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(JtxtIdProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(79, Short.MAX_VALUE))
+                        .addComponent(JtxtOferta, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(JbtnOferta, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap(80, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(17, 17, 17)
                 .addComponent(JlblTitulo)
+                .addGap(13, 13, 13)
+                .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(JlblIdProduct)
-                    .addComponent(JtxtIdProduct, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jBtnBuscarProductoID)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(JlblOfertasRealizadas)
-                .addGap(12, 12, 12)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(JlblOferta)
-                    .addComponent(JtxtOferta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(31, 31, 31)
-                .addComponent(JbtnOferta, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(23, Short.MAX_VALUE))
+                    .addComponent(JtxtOferta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JbtnOferta, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(40, 40, 40)
+                .addComponent(JlblOfertasRealizadas)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(85, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jBtnBuscarProductoIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnBuscarProductoIDActionPerformed
-        // TODO add your handling code here:
+    private void JbtnOfertaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JbtnOfertaActionPerformed
+        realizarOferta();
+    }//GEN-LAST:event_JbtnOfertaActionPerformed
+    private void consultarSubastaActual(){
         try{
-            if(!JtxtIdProduct.getText().isEmpty()){
-                ProductServices objProductServices = new ProductServices();
-                Products p = new Products();
-                p=objProductServices.consultarProduct(Integer.parseInt(JtxtIdProduct.getText()));
-                if(!p.getState().toString().equals("Pendiente")){
-                    System.out.println(p.getName());
-                    System.out.println(p.getState());
+            Product objProduct = this.objProductServices.consultarProductSubasta();
+            Object matriz [][] = new Object [1][4];
+            this.jTblProducto.setModel(new DefaultTableModel(
+            matriz,
+            new String[]{"Codigo", "Nombre", "Estado", "Valor"}
+            ));
 
-                    Object matriz [][] = new Object [1][4];
-                    this.jTblProducto.setModel(new DefaultTableModel(
-                                            matriz,
-                        new String [] {"Codigo","Nombre","Estado","Valor"}
-                    ));
-
-                    this.jTblProducto.setValueAt(p.getCode(), 0,0);
-                    this.jTblProducto.setValueAt(p.getName(), 0,1);
-                    this.jTblProducto.setValueAt(p.getState(), 0,2);
-                    this.jTblProducto.setValueAt(p.getinitValue(), 0,3);
-
-                    //mostrar en tabla solo para saber si llega el objeto cliente
-                    this.jTblListaDeOfertas.setValueAt(c.getname(), 0, 0);
-                }else{
-                    JOptionPane.showMessageDialog(this, "El articulo buscado no se encuentra disponible para subasta.");
-                }
-            }else{
-                    JOptionPane.showMessageDialog(this, "No ha suministrado datos validos.");
-            }
+            this.jTblProducto.setValueAt(objProduct.getCode(), 0, 0);
+            this.jTblProducto.setValueAt(objProduct.getName(), 0, 1);
+            this.jTblProducto.setValueAt(objProduct.getState(), 0, 2);
+            this.jTblProducto.setValueAt(objProduct.getInitValue(), 0, 3);
         }catch(Exception e){
             JOptionPane.showMessageDialog(this, "Fallo la conexion con el servidor.");
         }
         
-    }//GEN-LAST:event_jBtnBuscarProductoIDActionPerformed
+        
+    }
+    private void realizarOferta(){
+        try{
+            Product subasta = this.objProductServices.consultarProductSubasta();
+            System.out.println("porque: "+client.getUsername());
+            Offer offer = new Offer(client,subasta,Long.parseLong(this.JtxtOferta.getText()));
+            this.objOfertaServices.registrarOferta(offer);
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(this, "Fallo la conexion con el servidor.");
+        }
+         
+    }
+    
+     public void iniciarHilo(){
+        hilo=new Thread(this);
+        hilo.start();
+    }
+     @Override
+    public void run() {
+        while (true) {
+            List<Offer> lstOfertas = this.objOfertaServices.listarOfertas();
+            Object matriz[][] = new Object[lstOfertas.size()][4];
+            int j = 0;
+            for (int i = 0; i < lstOfertas.size(); i++) {
 
+                matriz[j][0] = lstOfertas.get(i).getProduct().getCode();
+                matriz[j][1] = lstOfertas.get(i).getProduct().getName();
+                matriz[j][2] = lstOfertas.get(i).getClient().getUsername();
+                matriz[j][3] = lstOfertas.get(i).getValue();
+                j++;
+            }
+            this.jTblListaDeOfertas.setModel(new DefaultTableModel(
+                    matriz,
+                new String [] {"Codigo","Nombre","Cliente","Oferta"}
+            ));
+            try {
+                Thread.sleep(4000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
     /**
      * @param args the command line arguments
      */
@@ -253,13 +269,11 @@ public class FormOfrecerOferta extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton JbtnOferta;
-    private javax.swing.JLabel JlblIdProduct;
     private javax.swing.JLabel JlblOferta;
     private javax.swing.JLabel JlblOfertasRealizadas;
     private javax.swing.JLabel JlblTitulo;
-    private javax.swing.JTextField JtxtIdProduct;
     private javax.swing.JTextField JtxtOferta;
-    private javax.swing.JButton jBtnBuscarProductoID;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
@@ -268,4 +282,6 @@ public class FormOfrecerOferta extends javax.swing.JFrame {
     private javax.swing.JTable jTblListaDeOfertas;
     private javax.swing.JTable jTblProducto;
     // End of variables declaration//GEN-END:variables
+
+    
 }

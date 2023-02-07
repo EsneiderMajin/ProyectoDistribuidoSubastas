@@ -7,7 +7,7 @@ package vista;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import models.Products;
+import models.Product;
 import servicios.ProductServices;
 
 /**
@@ -128,7 +128,7 @@ public class FrmListaProduct extends javax.swing.JFrame {
         try{
             if(!jtxtNombreProducto.getText().isEmpty()){
                 ProductServices objProductServices = new ProductServices();
-                Products p = new Products();
+                Product p = new Product();
                 p=objProductServices.consultarProduct(Integer.parseInt(jtxtNombreProducto.getText()));
                 
                 System.out.println(p.getName());
@@ -143,7 +143,7 @@ public class FrmListaProduct extends javax.swing.JFrame {
                 this.jTableProduct.setValueAt(p.getCode(), 0,0);
                 this.jTableProduct.setValueAt(p.getName(), 0,1);
                 this.jTableProduct.setValueAt(p.getState(), 0,2);
-                this.jTableProduct.setValueAt(p.getinitValue(), 0,3);
+                this.jTableProduct.setValueAt(p.getInitValue(), 0,3);
                 
             }else{
                     JOptionPane.showMessageDialog(this, "No ha suministrado datos validos.");
@@ -158,13 +158,13 @@ public class FrmListaProduct extends javax.swing.JFrame {
         
         try{
             ProductServices objProductServices = new ProductServices();
-            List<Products> lstProducts = objProductServices.listarProduct();
+            List<Product> lstProducts = objProductServices.listarProduct();
             Object matriz [][] = new Object [lstProducts.size()][4];
             for(int i=0;i<lstProducts.size();i++) {
                 matriz [i][0] = lstProducts.get(i).getCode();
                 matriz [i][1] = lstProducts.get(i).getName();
                 matriz [i][2] = lstProducts.get(i).getState();
-                matriz [i][3] = lstProducts.get(i).getinitValue();
+                matriz [i][3] = lstProducts.get(i).getInitValue();
             }
             this.jTableProduct.setModel(new DefaultTableModel(
                                     matriz,
