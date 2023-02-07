@@ -176,8 +176,6 @@ public class FrmRegistrarAdmin extends javax.swing.JDialog {
         //if(objManagerServices.autentificar(txtManager.getText(),txtPassword.getText())){
         if(objManagerServices.registrarManager(ObjManager)!=null){
             JOptionPane.showMessageDialog(this, "Usuario Registrado");
-        }else{
-            JOptionPane.showMessageDialog(this, "Usuario ya existente");
         }
         }else{
             JOptionPane.showMessageDialog(this, "name>5y<20,lastname>5y<20,username>10 <20, password>10 <20");

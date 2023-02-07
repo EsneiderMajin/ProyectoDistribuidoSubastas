@@ -15,6 +15,7 @@ public class FrmEstadoProducto extends javax.swing.JFrame {
      */
     public FrmEstadoProducto() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -31,7 +32,7 @@ public class FrmEstadoProducto extends javax.swing.JFrame {
         JbtnCerrarSubasta = new javax.swing.JButton();
         JtxtIdProduct = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         JlblIdProducto.setText("Digite el id del producto:");
 

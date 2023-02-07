@@ -21,6 +21,7 @@ public class FrmListarProducto extends javax.swing.JFrame {
      */
     public FrmListarProducto() {
         initComponents();
+        this.setLocationRelativeTo(null);
         llenarTablaProductosPendientes();
     }
 
@@ -40,7 +41,7 @@ public class FrmListarProducto extends javax.swing.JFrame {
         jButtonProductoEnSubasta = new javax.swing.JButton();
         jButtonProductosPendientes = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153), 2));
 

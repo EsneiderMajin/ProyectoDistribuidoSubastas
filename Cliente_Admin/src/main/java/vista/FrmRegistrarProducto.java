@@ -21,6 +21,7 @@ public class FrmRegistrarProducto extends javax.swing.JFrame {
      */
     public FrmRegistrarProducto() {
         initComponents();
+        this.setLocationRelativeTo(null);
         llenarCombo();
     }
 
@@ -44,7 +45,7 @@ public class FrmRegistrarProducto extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jButtonRegProduct = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setText("Codigo:");
 

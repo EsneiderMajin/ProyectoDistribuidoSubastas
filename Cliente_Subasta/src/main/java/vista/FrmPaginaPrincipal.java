@@ -115,6 +115,8 @@ public class FrmPaginaPrincipal extends javax.swing.JFrame {
 
     private void btnRealizarOfertaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRealizarOfertaActionPerformed
         // TODO add your handling code here:
+        FormOfrecerOferta formOferta = new FormOfrecerOferta();
+        formOferta.setVisible(true);
     }//GEN-LAST:event_btnRealizarOfertaActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

@@ -221,8 +221,6 @@ public class FrmRegistrarClienteS extends javax.swing.JDialog {
         //if(objManagerServices.autentificar(txtManager.getText(),txtPassword.getText())){
         if(objClienteServices.registrarCliente(ObjCliente)!=null){
             JOptionPane.showMessageDialog(this, "Usuario Registrado");
-        }else{
-            JOptionPane.showMessageDialog(this, "Usuario ya existente");
         }
         }else{
              JOptionPane.showMessageDialog(this, "name>5y<50,lastname>5y<50, email no null,phone>10, username>10, password>10");

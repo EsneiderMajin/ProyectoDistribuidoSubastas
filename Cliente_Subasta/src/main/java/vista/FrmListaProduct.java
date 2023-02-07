@@ -22,6 +22,7 @@ public class FrmListaProduct extends javax.swing.JFrame {
      */
     public FrmListaProduct() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -40,7 +41,7 @@ public class FrmListaProduct extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTableProduct = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         lblListaProductos.setText("Listado De Productos");
 

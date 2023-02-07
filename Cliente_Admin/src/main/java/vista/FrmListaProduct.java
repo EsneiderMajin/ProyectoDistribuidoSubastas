@@ -17,6 +17,7 @@ public class FrmListaProduct extends javax.swing.JFrame {
      */
     public FrmListaProduct() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -36,7 +37,7 @@ public class FrmListaProduct extends javax.swing.JFrame {
         JbtnListarproductos = new javax.swing.JButton();
         JbtnRetrocede = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         lblListaProductos.setText("Listado De Productos");
 

@@ -15,6 +15,7 @@ public class FormOfrecerOferta extends javax.swing.JFrame {
      */
     public FormOfrecerOferta() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -48,7 +49,7 @@ public class FormOfrecerOferta extends javax.swing.JFrame {
         jMenu2.setText("Edit");
         jMenuBar1.add(jMenu2);
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         JbtnOferta.setBackground(new java.awt.Color(200, 200, 200));
         JbtnOferta.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N

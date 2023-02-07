@@ -56,6 +56,11 @@ public class FrmPaginaPrincipal extends javax.swing.JFrame {
         });
 
         jButton1.setText("Listar Productos");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Actualizar Subasta");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -101,7 +106,7 @@ public class FrmPaginaPrincipal extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(10, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -120,11 +125,24 @@ public class FrmPaginaPrincipal extends javax.swing.JFrame {
 
     private void btnRegProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegProductoActionPerformed
         // TODO add your handling code here:
+        FrmRegistrarProducto frmregistrarproducto = new FrmRegistrarProducto();
+        frmregistrarproducto.setVisible(true);
+        
     }//GEN-LAST:event_btnRegProductoActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        FrmActualizarProducto frmactualizarproducto = new FrmActualizarProducto();
+        frmactualizarproducto.setVisible(true);
+        
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        FrmListarProducto frmlistarproducto = new FrmListarProducto();
+        frmlistarproducto.setVisible(true);
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments

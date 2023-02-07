@@ -24,6 +24,7 @@ public class FrmActualizarProducto extends javax.swing.JFrame {
      */
     public FrmActualizarProducto() {
         initComponents();
+        this.setLocationRelativeTo(null);
         this.objProductService = new ProductServices();
         this.lstProduct= this.objProductService.listarProducts();
         llenarComboBoxProductos();
@@ -44,7 +45,7 @@ public class FrmActualizarProducto extends javax.swing.JFrame {
         jButtonAbrirSubasta = new javax.swing.JButton();
         jButtonCerrarSubasta = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jLabel1.setText("Actualizar Producto");

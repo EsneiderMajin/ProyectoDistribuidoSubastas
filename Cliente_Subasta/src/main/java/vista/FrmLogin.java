@@ -145,11 +145,11 @@ public class FrmLogin extends javax.swing.JFrame {
 
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
         // TODO add your handling code here:
-        
+        try{
         if(!txtUsername.getText().isEmpty()&&!txtPassword.getText().isEmpty()){
             ClienteServices objClienteServices = new ClienteServices();
             //Manager objManagerConsultado= objManagerServices.consultarManager("dgustin");
-            System.out.println("que hay:"+txtUsername.getText()+"  "+txtPassword.getText());
+            //System.out.println("que hay:"+txtUsername.getText()+"  "+txtPassword.getText());
             if(objClienteServices.autentificar(txtUsername.getText(),txtPassword.getText())){
                 JOptionPane.showMessageDialog(this, "Bienvenido");
                 this.dispose();
@@ -163,6 +163,9 @@ public class FrmLogin extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Falta ingresar usuario o Password");
         }
         
+          }catch(Exception e){
+            JOptionPane.showMessageDialog(this, "Datos invalidos");
+        }
     }//GEN-LAST:event_btnIngresarActionPerformed
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
