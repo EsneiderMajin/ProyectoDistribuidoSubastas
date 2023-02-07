@@ -193,11 +193,26 @@ public class FormOfrecerOferta extends javax.swing.JFrame  implements Runnable{
     private void realizarOferta(){
         try{
             Product subasta = this.objProductServices.consultarProductSubasta();
+            List<Offer> lstOfertas = this.objOfertaServices.listarOfertas();
             System.out.println("porque: "+client.getUsername());
+            long oferta = Long.parseLong(this.JtxtOferta.getText());
+            long precioproducto = subasta.getInitValue();
+            for (int i = 0; i < lstOfertas.size(); i++) {
+                if(precioproducto<lstOfertas.get(i).getValue()){
+                    System.out.println("precio adentro:"+lstOfertas.get(i).getValue());    
+               precioproducto  = lstOfertas.get(i).getValue();
+                }
+            }
+            
+            if(oferta > precioproducto){
             Offer offer = new Offer(client,subasta,Long.parseLong(this.JtxtOferta.getText()));
             this.objOfertaServices.registrarOferta(offer);
+            }else{
+                JOptionPane.showMessageDialog(this, "La oferta debe ser mayor al precio original o anterior.");
+            }
+            
         }catch(Exception e){
-            JOptionPane.showMessageDialog(this, "Fallo la conexion con el servidor.");
+            JOptionPane.showMessageDialog(this, "No hay productos en subasta.");
         }
          
     }
