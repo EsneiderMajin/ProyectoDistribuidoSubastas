@@ -152,6 +152,7 @@ public class FrmRegistrarProducto extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonRegProductActionPerformed
     
     private void registrarProducto(){
+        try{
         ProductServices objProductService = new ProductServices();
         int item =  this.jComboState.getSelectedIndex();
         Product objProduct = new Product();
@@ -181,8 +182,11 @@ public class FrmRegistrarProducto extends javax.swing.JFrame {
             }else{   
                 JOptionPane.showMessageDialog(this, "Verifique los datos");
             }
-            
         }
+        
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(this, "Datos Invalidos");
+    }
         
     }
     private void llenarCombo(){

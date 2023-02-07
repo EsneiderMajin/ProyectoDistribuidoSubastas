@@ -167,7 +167,7 @@ public class FrmLogin extends javax.swing.JFrame {
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         // TODO add your handling code here:
-        FrmRegistrarAdmin frmRegistrarAdmin = new FrmRegistrarAdmin(this, true);
+        FrmRegistrarClienteS frmRegistrarAdmin = new FrmRegistrarClienteS(this, true);
         frmRegistrarAdmin.setVisible(true);
         
         

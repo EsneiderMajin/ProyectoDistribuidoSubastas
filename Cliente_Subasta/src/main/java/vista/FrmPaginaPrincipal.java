@@ -6,7 +6,6 @@
 package vista;
 
 import models.Cliente;
-import models.Manager;
 
 /**
  *

@@ -132,7 +132,7 @@ public class FrmListaProduct extends javax.swing.JFrame {
         // TODO add your handling code here:
         FrmPaginaPrincipal pp = new FrmPaginaPrincipal(null);
         System.exit(0);
-        pp.SetVisible(true);
+        pp.setVisible(true);
     }//GEN-LAST:event_JbtnRetrocedeActionPerformed
 
     /**

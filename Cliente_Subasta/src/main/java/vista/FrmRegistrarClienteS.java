@@ -13,12 +13,12 @@ import servicios.ClienteServices;
  *
  * @author Sneider
  */
-public class FrmRegistrarAdmin extends javax.swing.JDialog {
+public class FrmRegistrarClienteS extends javax.swing.JDialog {
 
     /**
      * Creates new form RegistrarAdmin
      */
-    public FrmRegistrarAdmin(java.awt.Frame parent, boolean modal) {
+    public FrmRegistrarClienteS(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
@@ -206,6 +206,8 @@ public class FrmRegistrarAdmin extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
+        
+        try{
         // TODO add your handling code here:
         if(!txtname.getText().isEmpty()&&
            !txtlastname.getText().isEmpty()&&
@@ -223,8 +225,12 @@ public class FrmRegistrarAdmin extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Usuario ya existente");
         }
         }else{
-            JOptionPane.showMessageDialog(this, "Verifique los datos");
+             JOptionPane.showMessageDialog(this, "name>5y<50,lastname>5y<50, email no null,phone>10, username>10, password>10");
         }
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(this, "Datos invalidos");
+        }
+        
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
     private void txtusernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtusernameActionPerformed
@@ -264,21 +270,23 @@ public class FrmRegistrarAdmin extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmRegistrarAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmRegistrarClienteS.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmRegistrarAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmRegistrarClienteS.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmRegistrarAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmRegistrarClienteS.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmRegistrarAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmRegistrarClienteS.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                FrmRegistrarAdmin dialog = new FrmRegistrarAdmin(new javax.swing.JFrame(), true);
+                FrmRegistrarClienteS dialog = new FrmRegistrarClienteS(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

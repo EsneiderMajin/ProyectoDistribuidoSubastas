@@ -164,6 +164,7 @@ public class FrmRegistrarAdmin extends javax.swing.JDialog {
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         // TODO add your handling code here:
+        try{
         if(!txtname.getText().isEmpty()&&
            !txtlastname.getText().isEmpty()&&
            !txtusername.getText().isEmpty()&&
@@ -179,8 +180,13 @@ public class FrmRegistrarAdmin extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Usuario ya existente");
         }
         }else{
-            JOptionPane.showMessageDialog(this, "Verifique los datos");
+            JOptionPane.showMessageDialog(this, "name>5y<20,lastname>5y<20,username>10 <20, password>10 <20");
         }
+                }catch(Exception e){
+            JOptionPane.showMessageDialog(this, "Datos invalidos");
+            
+        }
+        
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
     private void txtusernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtusernameActionPerformed
