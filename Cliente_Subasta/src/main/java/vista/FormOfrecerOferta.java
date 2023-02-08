@@ -185,7 +185,7 @@ public class FormOfrecerOferta extends javax.swing.JFrame  implements Runnable{
             this.jTblProducto.setValueAt(objProduct.getState(), 0, 2);
             this.jTblProducto.setValueAt(objProduct.getInitValue(), 0, 3);
         }catch(Exception e){
-            JOptionPane.showMessageDialog(this, "Fallo la conexion con el servidor.");
+            JOptionPane.showMessageDialog(this, "No hay productos en la subasta.");
         }
         
         
@@ -197,6 +197,7 @@ public class FormOfrecerOferta extends javax.swing.JFrame  implements Runnable{
             System.out.println("porque: "+client.getUsername());
             long oferta = Long.parseLong(this.JtxtOferta.getText());
             long precioproducto = subasta.getInitValue();
+            
             for (int i = 0; i < lstOfertas.size(); i++) {
                 if(precioproducto<lstOfertas.get(i).getValue()){
                     System.out.println("precio adentro:"+lstOfertas.get(i).getValue());    
